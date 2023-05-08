@@ -59,7 +59,6 @@ class Gui:
 
     def dispatch_hover_events(self, previous_hover, current_hover):
         if previous_hover is not current_hover:
-            print(current_hover)
             if previous_hover is not None:
                 previous_hover.onmouseout()
             if current_hover is not None:

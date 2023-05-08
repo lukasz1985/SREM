@@ -25,7 +25,7 @@ class Game:
         self.interface = None
 
     def run(self):
-        self.window = pygame.display.set_mode((600, 800), pygame.RESIZABLE)
+        self.window = pygame.display.set_mode((600, 800))
         pygame.display.set_caption("SREM")
         pygame.display.set_icon(assets.load_image("assets/icon.png"))
 

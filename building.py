@@ -125,8 +125,6 @@ class Building:
 
         self.set_contentment(int(contentment))
 
-        print(contentment)
-
     def set_contentment(self, contentment):
         if contentment > 100:
             contentment = 100
