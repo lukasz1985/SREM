@@ -1,14 +1,13 @@
 from assets import *
 
 
-
 class Player:
 
     def __init__(self, main):
         self.main = main
         self.funds = 10000
 
-        self.income_sound = load_sound("assets/money_collect.wav")
+        self.income_sound = load_sound("money_collect.wav")
 
     def draw_funds(self, amount):
         if self.funds - amount < 0:

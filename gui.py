@@ -3,12 +3,15 @@ from vectors import vec2
 
 
 class Gui:
-    def __init__(self):
+
+    def __init__(self, screen):
+        self.screen = screen
         self.widgets = []
         self.hover_widget = None
         self.has_button_down = False
-        pass
 
+    def get_size(self):
+        return self.screen.get_size()
 
     def add_widget(self, widget):
         self.widgets.append(widget)
@@ -44,7 +47,6 @@ class Gui:
         if event.type == pygame.MOUSEBUTTONUP:
             self.has_button_down = False
 
-
     def find_hover_widget(self, mouse):
         previous_hover = self.hover_widget
         current_hover = None
@@ -53,9 +55,7 @@ class Gui:
                 current_hover = widget
                 break
 
-
         return (previous_hover, current_hover)
-
 
     def dispatch_hover_events(self, previous_hover, current_hover):
         if previous_hover is not current_hover:
@@ -64,9 +64,9 @@ class Gui:
             if current_hover is not None:
                 current_hover.onmouseover()
 
-    def draw(self, screen):
+    def draw(self):
         for widget in reversed(self.widgets):
-            widget.draw(screen)
+            widget.draw(self.screen)
 
 
 

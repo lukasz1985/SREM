@@ -1,5 +1,4 @@
 import pygame
-
 import assets
 import player
 import tests
@@ -7,13 +6,15 @@ import iso
 import gui
 import world
 import interface
-
+from tkinter import *
 
 # The main game class that is intantiated on startup.
 class Game:
 
-    def __init__(self):
+    def __init__(self, w, h):
         pygame.init()
+        self.width = w
+        self.height = h
         self.window = None  # The pygame window Surface
         self.input = None
         self.view = None
@@ -25,12 +26,12 @@ class Game:
         self.interface = None
 
     def run(self):
-        self.window = pygame.display.set_mode((600, 800))
+        self.window = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("SREM")
-        pygame.display.set_icon(assets.load_image("assets/icon.png"))
+        pygame.display.set_icon(assets.load_image("icon.png"))
 
         self.view = iso.View(self.window)
-        self.gui = gui.Gui()
+        self.gui = gui.Gui(self.window)
 
         self.onInit()
 
@@ -61,7 +62,7 @@ class Game:
     def draw(self):
         self.window.fill((0, 0, 0))
         self.view.draw()
-        self.gui.draw(self.window)
+        self.gui.draw()
 
     def onInit(self):
         self.player = player.Player(self)
@@ -69,9 +70,35 @@ class Game:
         self.interface = interface.Interface(self)
         self.world.create()
         self.interface.display()
-        pass
+
+
+
+def display_screen_size_dropdown():
+    tk = Tk()
+    selected = StringVar()
+    selected.set("600x800")
+
+    def start():
+        size_str = selected.get()
+        w = int(size_str.split("x")[0])
+        h = int(size_str.split("x")[1])
+        tk.withdraw()
+        tk.quit()
+        game = Game(w, h)
+        game.run()
+
+    options = [
+        "600x600",
+        "600x700",
+        "600x800"
+    ]
+    
+    dropdown = OptionMenu(tk, selected, *options)
+    dropdown.pack()
+    ok_button = Button(tk, text="OK", command=start)
+    ok_button.pack()
+    tk.mainloop()
 
 
 if __name__ == "__main__":
-    game = Game()
-    game.run()
+    display_screen_size_dropdown()

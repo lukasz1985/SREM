@@ -36,10 +36,10 @@ class World:
         Create ground - thst is - the terrain and the roads.
         '''
         view = self.main.view
-        self.terrain = Sprite(load_image("assets/terrain.png"))
+        self.terrain = Sprite(load_image("terrain.png"))
         self.terrain.set_layer(Layer.TERRAIN_LAYER)
         view.add_sprite(self.terrain)
-        self.roads = Sprite(load_image("assets/roads.png"))
+        self.roads = Sprite(load_image("roads.png"))
         self.roads.set_layer(Layer.OVERLAYS_LAYER)
         view.add_sprite(self.roads)
 
@@ -58,7 +58,7 @@ class World:
         Create the factory in the top-right corner of the screen
         '''
         view = self.main.view
-        self.factory = Sprite(load_image("assets/factory.png"))
+        self.factory = Sprite(load_image("factory.png"))
         self.factory.set_layer(Layer.OBJECTS_LAYER)
         self.factory.set_location(vec3(-3.05, -9, 0))
         view.add_sprite(self.factory)
@@ -69,12 +69,12 @@ class World:
         '''
         view = self.main.view
 
-        self.park1 = Sprite(load_image("assets/park1.png"))
+        self.park1 = Sprite(load_image("park1.png"))
         self.park1.set_layer(Layer.OBJECTS_LAYER)
         self.park1.set_location(vec3(9, 9, 0))
         view.add_sprite(self.park1)
 
-        self.park2 = Sprite(load_image("assets/park2.png"))
+        self.park2 = Sprite(load_image("park2.png"))
         self.park2.set_layer(Layer.OBJECTS_LAYER)
         self.park2.set_location(vec3(3.1, 9, 0))
         view.add_sprite(self.park2)
@@ -82,7 +82,7 @@ class World:
     def create_parking(self):
         view = self.main.view
 
-        self.parking = Sprite(load_image("assets/parking.png"))
+        self.parking = Sprite(load_image("parking.png"))
         self.parking.set_layer(Layer.OVERLAYS_LAYER)
         self.parking.set_location(vec3(3, -3, 0))
         view.add_sprite(self.parking)

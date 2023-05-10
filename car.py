@@ -28,7 +28,7 @@ class Car(Sprite):
         heading_str = "north" if heading == Heading.NORTH else "south"
         car_name = random.choice(options)
         img_name = car_name + "_" + heading_str + ".png"
-        return load_image("assets/cars/" + img_name)
+        return load_image("cars/" + img_name)
 
     def scale_up(self):
         '''
@@ -47,7 +47,7 @@ class Car(Sprite):
 
         rnd = random.randint(0,11000)
         if rnd == 0 or rnd == 1:
-            car_sound = load_sound(f"assets/car_{rnd + 1}.wav")
+            car_sound = load_sound(f"car_{rnd + 1}.wav")
             car_sound.play()
 
         loc = self.path.start.lerp(self.path.end, self.interpolator)

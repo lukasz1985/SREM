@@ -6,6 +6,7 @@ import gui
 
 
 class Interface:
+
     def __init__(self, main):
         self.main = main
 
@@ -13,10 +14,10 @@ class Interface:
         self.upgrade_button_controls = []
         self.helipad_button_controls = []
         self.contentment_icon = None
-        self.contentment_happy_icon = assets.load_image("assets/happy.png")
-        self.contentment_indifferent_icon = assets.load_image("assets/indifferent.png")
-        self.contentment_unhappy_icon = assets.load_image("assets/unhappy.png")
-        self.contentment_very_unhappy_icon = assets.load_image("assets/very_unhappy.png")
+        self.contentment_happy_icon = assets.load_image("happy.png")
+        self.contentment_indifferent_icon = assets.load_image("indifferent.png")
+        self.contentment_unhappy_icon = assets.load_image("unhappy.png")
+        self.contentment_very_unhappy_icon = assets.load_image("very_unhappy.png")
 
         self.date_month_txt = None
         self.date_day_txt = None
@@ -38,32 +39,32 @@ class Interface:
         thegui = self.main.gui
         world = self.main.world
 
-        offset = 10
+        w, h = thegui.get_size()
 
-        font = assets.load_font("assets/Teko-Bold.ttf", 24)
+        font = assets.load_font("Teko-Bold.ttf", 24)
         upgrade_text = gui.Text("Upgrade", font)
-        upgrade_text.set_position(vec2(10, 670 + offset))
+        upgrade_text.set_position(vec2(10, h - 120))
         thegui.add_widget(upgrade_text)
 
         self.upgrade_button_controls.append(upgrade_text)
 
-        upgrade_button = gui.Button(assets.load_image("assets/upgrade_button.png"), self.upgrade)
-        upgrade_button.set_position(vec2(0, 660 + offset))
+        upgrade_button = gui.Button(assets.load_image("upgrade_button.png"), self.upgrade)
+        upgrade_button.set_position(vec2(0, h - 130))
         thegui.add_widget(upgrade_button)
 
         self.upgrade_button_controls.append(upgrade_button)
 
-        font2 = assets.load_font("assets/Teko-Bold.ttf", 16)
+        font2 = assets.load_font("Teko-Bold.ttf", 16)
         upgrade_cost_str = "$" + str(world.building.get_upgrade_cost())
         upgrade_cost_txt = gui.Text(upgrade_cost_str, font2, (255, 255, 255))
-        upgrade_cost_txt.set_position(vec2(20, 695 + offset))
+        upgrade_cost_txt.set_position(vec2(20, h - 95))
         self.upgrade_cost_txt = upgrade_cost_txt
         thegui.add_widget(upgrade_cost_txt)
 
         self.upgrade_button_controls.append(upgrade_cost_txt)
 
-        upgrade_cost_bg = gui.ImageWidget(assets.load_image("assets/upgrade_cost_bg.png"))
-        upgrade_cost_bg.set_position(vec2(0, 690 + offset))
+        upgrade_cost_bg = gui.ImageWidget(assets.load_image("upgrade_cost_bg.png"))
+        upgrade_cost_bg.set_position(vec2(0, h - 100))
         thegui.add_widget(upgrade_cost_bg)
 
         self.upgrade_button_controls.append(upgrade_cost_bg)
@@ -72,31 +73,31 @@ class Interface:
         thegui = self.main.gui
         world = self.main.world
 
-        offset = -50
+        w, h = thegui.get_size()
 
-        font = assets.load_font("assets/Teko-Bold.ttf", 24)
+        font = assets.load_font("Teko-Bold.ttf", 24)
         helipad_text = gui.Text("Helipad", font)
-        helipad_text.set_position(vec2(10, 670 + offset))
+        helipad_text.set_position(vec2(10, h - 180))
         thegui.add_widget(helipad_text)
 
         self.helipad_button_controls.append(helipad_text)
 
-        helipad_button = gui.Button(assets.load_image("assets/helipad_button.png"), self.build_helipad)
-        helipad_button.set_position(vec2(0, 660 + offset))
+        helipad_button = gui.Button(assets.load_image("helipad_button.png"), self.build_helipad)
+        helipad_button.set_position(vec2(0, h - 190))
         thegui.add_widget(helipad_button)
 
         self.helipad_button_controls.append(helipad_button)
 
-        font2 = assets.load_font("assets/Teko-Bold.ttf", 16)
+        font2 = assets.load_font("Teko-Bold.ttf", 16)
         helipad_cost_str = "$" + str(5000)
         helipad_cost_txt = gui.Text(helipad_cost_str, font2, (255, 255, 255))
-        helipad_cost_txt.set_position(vec2(20, 695 + offset))
+        helipad_cost_txt.set_position(vec2(20, h - 155))
         thegui.add_widget(helipad_cost_txt)
 
         self.helipad_button_controls.append(helipad_cost_txt)
 
-        helipad_cost_bg = gui.ImageWidget(assets.load_image("assets/upgrade_cost_bg.png"))
-        helipad_cost_bg.set_position(vec2(0, 690 + offset))
+        helipad_cost_bg = gui.ImageWidget(assets.load_image("upgrade_cost_bg.png"))
+        helipad_cost_bg.set_position(vec2(0, h - 160))
 
         self.helipad_button_controls.append(helipad_cost_bg)
 
@@ -110,30 +111,34 @@ class Interface:
         thegui = self.main.gui
         player = self.main.player
 
-        font = assets.load_font("assets/Teko-Bold.ttf", 16)
+        w, h = thegui.get_size()
+
+        font = assets.load_font("Teko-Bold.ttf", 16)
         funds = player.get_funds()
         self.funds_gauge_txt = gui.Text("Funds: $" + str(funds), font, (255, 255, 255))
-        self.funds_gauge_txt.set_position(vec2(600 - 110, 800 - 22))
+        self.funds_gauge_txt.set_position(vec2(600 - 110, h - 22))
         thegui.add_widget(self.funds_gauge_txt)
 
-        funds_gauge_bg = gui.ImageWidget(assets.load_image("assets/funds_gauge_bg.png"))
-        funds_gauge_bg.set_position(vec2(600 - 173, 800 - 31))
+        funds_gauge_bg = gui.ImageWidget(assets.load_image("funds_gauge_bg.png"))
+        funds_gauge_bg.set_position(vec2(600 - 173, h - 31))
         thegui.add_widget(funds_gauge_bg)
 
     def display_contentment(self):
         thegui = self.main.gui
 
-        font = assets.load_font("assets/Teko-Regular.ttf", 16)
+        w, h = thegui.get_size()
+
+        font = assets.load_font("Teko-Regular.ttf", 16)
         contentment_txt = gui.Text("Contentment", font)
-        contentment_txt.set_position(vec2(600 - 74, 800 - 114))
+        contentment_txt.set_position(vec2(600 - 74, h - 114))
         thegui.add_widget(contentment_txt)
 
-        self.contentment_icon = gui.ImageWidget(assets.load_image("assets/happy.png"))
-        self.contentment_icon.set_position(vec2(600 - 54, 800 - 96))
+        self.contentment_icon = gui.ImageWidget(assets.load_image("happy.png"))
+        self.contentment_icon.set_position(vec2(600 - 54, h - 96))
         thegui.add_widget(self.contentment_icon)
 
-        contentment_bg = gui.ImageWidget(assets.load_image("assets/contentment_bg.png"))
-        contentment_bg.set_position(vec2(600 - 146, 800 - 116))
+        contentment_bg = gui.ImageWidget(assets.load_image("contentment_bg.png"))
+        contentment_bg.set_position(vec2(600 - 146, h - 116))
         thegui.add_widget(contentment_bg)
 
     def display_date_gauge(self):
@@ -142,38 +147,42 @@ class Interface:
         '''
         thegui = self.main.gui
 
-        date_font = assets.load_font("assets/Teko-Regular.ttf", 14)
+        w, h = thegui.get_size()
+
+        date_font = assets.load_font("Teko-Regular.ttf", 14)
 
         self.date_month_txt = gui.Text("Month: 1", date_font)
-        self.date_month_txt.set_position(vec2(600 - 50, 800 - 62))
+        self.date_month_txt.set_position(vec2(600 - 50, h - 62))
         thegui.add_widget(self.date_month_txt)
 
         self.date_day_txt = gui.Text("Day: 1", date_font)
-        self.date_day_txt.set_position(vec2(600 - 45, 800 - 48))
+        self.date_day_txt.set_position(vec2(600 - 45, h - 48))
         thegui.add_widget(self.date_day_txt)
 
-        date_bg_img = assets.load_image("assets/date_bg.png")
+        date_bg_img = assets.load_image("date_bg.png")
         date_bg_widget = gui.ImageWidget(date_bg_img)
-        date_bg_widget.set_position(vec2(600 - 146, 800 - 65))
+        date_bg_widget.set_position(vec2(600 - 146, h - 65))
         thegui.add_widget(date_bg_widget)
 
     def display_rent_slider(self):
         thegui = self.main.gui
 
-        font = assets.load_font("assets/Teko-Regular.ttf", 16)
+        w, h = thegui.get_size()
+
+        font = assets.load_font("Teko-Regular.ttf", 16)
         self.rent_amount_text = gui.Text("Rent: $1000", font)
-        self.rent_amount_text.set_position(vec2(10, 744))
+        self.rent_amount_text.set_position(vec2(10, h - 56))
         thegui.add_widget(self.rent_amount_text)
 
-        rail_img = assets.load_image("assets/slider_rail.png")
-        knob_img = assets.load_image("assets/slider_knob.png")
+        rail_img = assets.load_image("slider_rail.png")
+        knob_img = assets.load_image("slider_knob.png")
 
         self.rent_slider = gui.Slider(rail_img, knob_img, self.rent_changed)
-        self.rent_slider.set_position(vec2(70, 740))
+        self.rent_slider.set_position(vec2(70, h - 60))
         thegui.add_widget(self.rent_slider)
 
-        rent_slider_bg = gui.ImageWidget(assets.load_image("assets/rent_slider_bg.png"))
-        rent_slider_bg.set_position(vec2(0, 736))
+        rent_slider_bg = gui.ImageWidget(assets.load_image("rent_slider_bg.png"))
+        rent_slider_bg.set_position(vec2(0, h - 64))
         thegui.add_widget(rent_slider_bg)
 
 
@@ -285,16 +294,19 @@ class Interface:
 
 
 class StatusBar:
+
     def __init__(self, thegui):
         self.gui = thegui
 
-        background_img = assets.load_image("assets/status_bar_bg.png")
-        self.background = gui.ImageWidget(background_img)
-        self.background.set_position(vec2(0, 800 - 20))
+        w, h = thegui.get_size()
 
-        font = assets.load_font("assets/Teko-Regular.ttf", 18)
+        background_img = assets.load_image("status_bar_bg.png")
+        self.background = gui.ImageWidget(background_img)
+        self.background.set_position(vec2(0, h - 20))
+
+        font = assets.load_font("Teko-Regular.ttf", 18)
         self.text = gui.Text("Status bar", font)
-        self.text.set_position(vec2(10, 800 - 18))
+        self.text.set_position(vec2(10, h - 18))
 
         self.message = None
         self.time = 0
