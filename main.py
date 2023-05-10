@@ -75,6 +75,13 @@ class Game:
 
 def display_screen_size_dropdown():
     tk = Tk()
+    tk.title("SREM")
+    tk.geometry("300x120")
+    tk.wm_iconphoto(False, PhotoImage(file="assets/pixel/icon.png"))
+
+    label = Label(tk, text="Select window size:")
+    label.pack()
+
     selected = StringVar()
     selected.set("600x800")
 
@@ -92,7 +99,7 @@ def display_screen_size_dropdown():
         "600x700",
         "600x800"
     ]
-    
+
     dropdown = OptionMenu(tk, selected, *options)
     dropdown.pack()
     ok_button = Button(tk, text="OK", command=start)
