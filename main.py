@@ -1,7 +1,6 @@
 import pygame
 import assets
 import player
-import tests
 import iso
 import gui
 import world
@@ -25,7 +24,7 @@ class Game:
         self.world = None
         self.interface = None
 
-    def run(self):
+    def init(self):
         self.window = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("SREM")
         pygame.display.set_icon(assets.load_image("icon.png"))
@@ -35,11 +34,9 @@ class Game:
 
         self.onInit()
 
-        self.test = tests.TestIso(self)
-        if self.test is not None:
-            self.test.onInit()
+        self.clock = pygame.time.Clock()
 
-        clock = pygame.time.Clock()
+    def loop(self):
 
         while not self.done:
 
@@ -49,11 +46,11 @@ class Game:
                 else:
                     self.gui.on_event(event)
 
-            self.update(clock)
+            self.update(self.clock)
             self.draw()
 
             pygame.display.flip()
-            clock.tick(60)
+            self.clock.tick(60)
 
     def update(self, clock):
         self.world.update(clock)
@@ -92,7 +89,8 @@ def display_screen_size_dropdown():
         tk.withdraw()
         tk.quit()
         game = Game(w, h)
-        game.run()
+        game.init()
+        game.loop()
 
     options = [
         "600x600",

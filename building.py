@@ -13,9 +13,9 @@ class Building:
         self.helipad = None
         self.rent = 1000
         self.contentment = 100
-        self.abandon_timeout = 2000
+        self.abandon_timeout = 0
         self.abandon_time = 0
-        self.comeback_timeout = 1000
+        self.comeback_timeout = 0
         self.comeback_time = 0
         self.abandoned_floors_idx = []
 
@@ -82,9 +82,9 @@ class Building:
 
     def make_helipad(self):
         y = self.level
-        self.helipad = Sprite(load_image("helipad.png"))
+        self.helipad = Sprite(load_image("building/helipad.png"))
         self.helipad.set_layer(Layer.OBJECTS_LAYER)
-        self.helipad.set_location(vec3(3, 3, y))
+        self.helipad.set_location(vec3(3, 3, y + 0.01))
         self.view.add_sprite(self.helipad)
 
     def destroy_helipad(self):
@@ -139,9 +139,9 @@ class Building:
             self.comeback_timeout = 0
             self.comeback_time = 0
 
-        if contentment < 70 and contentment >= 40:
+        if 70 > contentment >= 40:
             self.abandon_timeout = 20000
-        elif contentment < 40 and contentment >= 20:
+        elif 40 > contentment >= 20:
             self.abandon_timeout = 10000
         elif contentment < 20:
             self.abandon_timeout = 5000
@@ -163,6 +163,7 @@ class Building:
                 self.remove_abandoned_floor()
 
     def make_abandoned_floor(self):
+
         candidate_floors = []
         for floor in range(1, self.level):
             if not floor in self.abandoned_floors_idx:

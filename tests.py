@@ -1,35 +1,50 @@
 import iso
 import assets
+from main import Game
 from vectors import vec3
 
 class Test:
 
-    def __init__(self, game):
-        self.view = game.view
-        self.window = game.window
-
-    # Abstract method that is run upon initialization of the game:
-    def onInit(self):
+    # Abstract method that is run upon initialization of the test:
+    def run(self):
         pass
 
 
 class TestIso(Test):
-
-    def onInit(self):
-        pass
-        #image = assets.loadImage("assets/terrain.png")
-        #sprite = Sprite(image)
-        #self.view.addSprite(sprite)
-
-        # for y in range(10):
-        #     for x in range(10):
-        #         center_blob = assets.load_image("assets/test/blob.png")
-        #         center_spr = iso.Sprite(center_blob)
-        #         loc = vec3(x, y, 0)
-        #         center_spr.set_location(loc)
-        #         center_spr.set_layer(10)
-        #         self.view.add_sprite(center_spr)
+    pass
 
 
+class TestGame(Test):
 
+    def run(self):
+        game = Game(600, 800)
+        game.init()
+        game.loop()
+
+
+class TestAbandonment(Test):
+
+    def run(self):
+        game = Game(600, 800)
+        game.init()
+        game.world.building.set_contentment(0)
+        for _ in range(0,8):
+            game.world.building.upgrade()
+        game.loop()
+
+class TestHelipad(Test):
+
+    def run(self):
+        game = Game(600,800)
+        game.init()
+        for _ in range(0,11):
+            game.world.building.upgrade()
+        game.world.building.make_helipad()
+        game.loop()
+
+
+if __name__ == "__main__":
+    #test = TestAbandonment()
+    test = TestHelipad()
+    test.run()
 

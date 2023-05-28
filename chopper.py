@@ -60,7 +60,7 @@ class Chopper(Sprite):
         if self.mode == Chopper.MODE_LANDING:
             building = self.world.building
             target_z = building.get_level()
-            path = Path(vec3(3,3,17), vec3(3,3, target_z))
+            path = Path(vec3(3,3,17), vec3(3,3, target_z + 0.02))
             itpl = self.time / 3000
             loc = path.start.lerp(path.end, itpl)
             self.set_location(loc)
@@ -81,7 +81,7 @@ class Chopper(Sprite):
         if self.mode == Chopper.MODE_STARTING:
             building = self.world.building
             start_z = building.get_level()
-            path = Path(vec3(3, 3, start_z), vec3(3, 3, 17))
+            path = Path(vec3(3, 3, start_z + 0.02), vec3(3, 3, 17))
             itpl = self.time / 3000
             loc = path.start.lerp(path.end, itpl)
             self.set_location(loc)
