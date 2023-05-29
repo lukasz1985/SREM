@@ -108,7 +108,7 @@ def display_startup_dropdown():
         size_str = selected_size.get()
         w = int(size_str.split("x")[0])
         h = int(size_str.split("x")[1])
- 
+
         style_str = selected_style.get()
         if style_str == "Pixelated":
             assets.images_dir = "pixel"
