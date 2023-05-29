@@ -70,40 +70,62 @@ class Game:
 
 
 
-def display_screen_size_dropdown():
+def display_startup_dropdown():
     tk = Tk()
     tk.title("SREM")
     tk.geometry("300x120")
     tk.wm_iconphoto(False, PhotoImage(file="assets/pixel/icon.png"))
 
+    screen_options = [
+        "600x600",
+        "600x700",
+        "600x800"
+    ]
+
     label = Label(tk, text="Select window size:")
     label.pack()
 
-    selected = StringVar()
-    selected.set("600x800")
+    selected_size = StringVar()
+    selected_size.set("600x800")
+
+    screen_dropdown = OptionMenu(tk, selected_size, *screen_options)
+    screen_dropdown.pack()
+
+
+    style_options = ["Pixelated", "Vector"]
+
+    label = Label(tk, text="Select graphical style")
+    label.pack()
+
+    selected_style = StringVar()
+    selected_style.set("Vector")
+
+    style_dropdown = OptionMenu(tk, selected_style, *style_options)
+    style_dropdown.pack()
+
 
     def start():
-        size_str = selected.get()
+        size_str = selected_size.get()
         w = int(size_str.split("x")[0])
         h = int(size_str.split("x")[1])
+ 
+        style_str = selected_style.get()
+        if style_str == "Pixelated":
+            assets.images_dir = "pixel"
+        elif style_str == "Vector":
+            assets.images_dir = "svg"
+
         tk.withdraw()
         tk.quit()
         game = Game(w, h)
         game.init()
         game.loop()
 
-    options = [
-        "600x600",
-        "600x700",
-        "600x800"
-    ]
 
-    dropdown = OptionMenu(tk, selected, *options)
-    dropdown.pack()
     ok_button = Button(tk, text="OK", command=start)
     ok_button.pack()
     tk.mainloop()
 
 
 if __name__ == "__main__":
-    display_screen_size_dropdown()
+    display_startup_dropdown()
