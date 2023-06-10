@@ -11,35 +11,28 @@ from tkinter import *
 class Game:
 
     def __init__(self, w, h):
+        # Screen setup
         pygame.init()
-        self.width = w
-        self.height = h
-        self.window = None  # The pygame window Surface
-        self.input = None
-        self.view = None
-        self.gui = None
-        self.test = None
-        self.done = False  # A flag for the game loop indicating if the game is done playing.
-        self.player = None
-        self.world = None
-        self.interface = None
-
-    def init(self):
-        self.window = pygame.display.set_mode((self.width, self.height))
+        self.window = pygame.display.set_mode((w, h))
         pygame.display.set_caption("SREM")
         pygame.display.set_icon(assets.load_image("icon.png"))
-
+        # The onscreen display objects creation:
         self.view = iso.View(self.window)
         self.gui = gui.Gui(self.window)
-
-        self.onInit()
-
-        self.clock = pygame.time.Clock()
+        # Player control object
+        self.player = player.Player(self)
+        # World creation
+        self.world = world.World(self)
+        self.world.display()
+        # Interface creation
+        self.interface = interface.Interface(self)
+        self.interface.display()
+        # Utilities
+        self.done = False  # A flag for the game loop indicating if the game is done playing.
+        self.clock = pygame.time.Clock() # Clock to control the framerate
 
     def loop(self):
-
         while not self.done:
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.done = True
@@ -60,14 +53,6 @@ class Game:
         self.window.fill((0, 0, 0))
         self.view.draw()
         self.gui.draw()
-
-    def onInit(self):
-        self.player = player.Player(self)
-        self.world = world.World(self)
-        self.interface = interface.Interface(self)
-        self.world.create()
-        self.interface.display()
-
 
 
 def display_startup_dropdown():
@@ -103,7 +88,6 @@ def display_startup_dropdown():
     style_dropdown = OptionMenu(tk, selected_style, *style_options)
     style_dropdown.pack()
 
-
     def start():
         size_str = selected_size.get()
         w = int(size_str.split("x")[0])
@@ -118,9 +102,8 @@ def display_startup_dropdown():
         tk.withdraw()
         tk.quit()
         game = Game(w, h)
-        game.init()
+        game.startup()
         game.loop()
-
 
     ok_button = Button(tk, text="OK", command=start)
     ok_button.pack()

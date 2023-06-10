@@ -18,7 +18,7 @@ class TestGame(Test):
 
     def run(self):
         game = Game(600, 800)
-        game.init()
+        game.player.funds = 100000
         game.loop()
 
 
@@ -26,7 +26,6 @@ class TestAbandonment(Test):
 
     def run(self):
         game = Game(600, 800)
-        game.init()
         game.world.building.set_contentment(0)
         for _ in range(0,8):
             game.world.building.upgrade()
@@ -36,7 +35,7 @@ class TestHelipad(Test):
 
     def run(self):
         game = Game(600,800)
-        game.init()
+        game.player.funds = 1000000
         for _ in range(0,11):
             game.world.building.upgrade()
         game.world.building.make_helipad()
@@ -46,5 +45,6 @@ class TestHelipad(Test):
 if __name__ == "__main__":
     #test = TestAbandonment()
     test = TestHelipad()
+    # test = TestGame()
     test.run()
 

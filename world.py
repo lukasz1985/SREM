@@ -21,8 +21,6 @@ class World:
         self.spawn_time = 0 # Car spawn time
         self.chopper = Chopper(self)
 
-
-    def create(self):
         self.create_building()
         self.create_ground()
         self.create_parks()
@@ -30,6 +28,14 @@ class World:
         self.create_factory()
         self.create_paths()
 
+    def display(self):
+        view = self.main.view
+        view.add_sprite(self.roads)
+        self.building.display()
+        view.add_sprite(self.factory)
+        view.add_sprite(self.park1)
+        view.add_sprite(self.park2)
+        view.add_sprite(self.parking)
 
     def create_ground(self):
         '''
@@ -41,7 +47,6 @@ class World:
         view.add_sprite(self.terrain)
         self.roads = Sprite(load_image("roads.png"))
         self.roads.set_layer(Layer.OVERLAYS_LAYER)
-        view.add_sprite(self.roads)
 
     def create_building(self):
         '''
@@ -50,8 +55,6 @@ class World:
         view = self.main.view
 
         self.building = Building(view)
-        self.building.display()
-
 
     def create_factory(self):
         '''
@@ -61,7 +64,6 @@ class World:
         self.factory = Sprite(load_image("factory.png"))
         self.factory.set_layer(Layer.OBJECTS_LAYER)
         self.factory.set_location(vec3(-3.05, -9, 0))
-        view.add_sprite(self.factory)
 
     def create_parks(self):
         '''
@@ -72,12 +74,10 @@ class World:
         self.park1 = Sprite(load_image("park1.png"))
         self.park1.set_layer(Layer.OBJECTS_LAYER)
         self.park1.set_location(vec3(9, 9, 0))
-        view.add_sprite(self.park1)
 
         self.park2 = Sprite(load_image("park2.png"))
         self.park2.set_layer(Layer.OBJECTS_LAYER)
         self.park2.set_location(vec3(3.1, 9, 0))
-        view.add_sprite(self.park2)
 
     def create_parking(self):
         view = self.main.view
@@ -85,7 +85,6 @@ class World:
         self.parking = Sprite(load_image("parking.png"))
         self.parking.set_layer(Layer.OVERLAYS_LAYER)
         self.parking.set_location(vec3(3, -3, 0))
-        view.add_sprite(self.parking)
 
     def create_paths(self):
         '''

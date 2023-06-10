@@ -18,9 +18,9 @@ class Building:
         self.comeback_timeout = 0
         self.comeback_time = 0
         self.abandoned_floors_idx = []
+        self.make_sprites()
 
     def display(self):
-        self.make_sprites()
         self.add_to_view()
 
     def add_to_view(self):

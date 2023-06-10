@@ -14,6 +14,8 @@ class Gui:
         return self.screen.get_size()
 
     def add_widget(self, widget):
+        if not isinstance(widget, Widget):
+            raise Exception(str(widget) + " is not a widget")
         self.widgets.append(widget)
 
     def remove_widget(self, widget):
