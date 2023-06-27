@@ -29,5 +29,8 @@ Except the floor is not abandoned - then you will earn no money for that floor. 
 get abandoned if your inhabitants are unhappy, and they will become unhappy if you set the rent high.
 The other circumstance is that you will earn only a half of the rent, when the floor is dirty.
 
+Another feature is the ability to build helipad. If you build helipad, the total rent each month will
+be 1.5X higher.
+
 That's it, good luck!
 
