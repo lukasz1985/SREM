@@ -25,7 +25,7 @@ Every month you earn money from rents. A rent slider is provided so you can set
 how much you will drain the inhabitants of the estate. 
 
 The rent is per floor - so setting it for example at 1000 and having 4 floors will earn you 4000 credits a month, except...
-Except the floor is not abandoned - then you will earn no money for that floor. Floors will
+Except if the floor is abandoned - then you will earn no money for that floor. Floors will
 get abandoned if your inhabitants are unhappy, and they will become unhappy if you set the rent high.
 The other circumstance is that you will earn only a half of the rent, when the floor is dirty.
 
