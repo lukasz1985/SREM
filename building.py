@@ -1,4 +1,6 @@
 import random
+
+from cleaner import Cleaner
 from constants import *
 from assets import *
 from iso import *
@@ -13,11 +15,18 @@ class Building:
         self.helipad = None
         self.rent = 1000
         self.contentment = 100
+
         self.abandon_timeout = 0
         self.abandon_time = 0
         self.comeback_timeout = 0
         self.comeback_time = 0
-        self.abandoned_floors_idx = []
+        self.abandoned_floors_idx = [] # Array of indexes of abandoned floors
+
+        self.dirty_time = 0 # The time since last appearance of new dirty floor
+        self.dirty_timeout = 40000 # A new dirty floor will appear every 40 seconds (40 000 ms)
+        self.dirty_floors_idx = [] # Array of indexes of dirty floors
+        self.cleaner = Cleaner(self, self.view)
+
         self.make_sprites()
 
     def display(self):
@@ -66,6 +75,8 @@ class Building:
         for y in range(1, self.level):
             if y in self.abandoned_floors_idx:
                 floor_img = load_image("building/abandoned_floor.png")
+            elif y in self.dirty_floors_idx:
+                floor_img = load_image("building/dirty_floor.png")
             else:
                 floor_img = load_image("building/floor.png")
             floor_spr = Sprite(floor_img)
@@ -105,16 +116,25 @@ class Building:
         return self.level
 
     def set_rent(self, rent):
+        # Set the per floor rent drawn every month
         self.rent = rent
 
     def get_rent(self):
+        ''' Get the per floor rent'''
         return self.rent
 
-
     def get_total_rent(self):
-        all_floors_rent = self.level * self.rent
-        abandoned_floors_rent = len(self.abandoned_floors_idx) * self.rent
-        return all_floors_rent - abandoned_floors_rent
+        ''' Get the total rent for a month, from every floor. '''
+        total_rent = 0
+        for floor_idx in range(0, self.level):
+            base_rent = self.get_rent()
+            rent = base_rent
+            if floor_idx in self.dirty_floors_idx:
+                rent *= 0.5
+            if floor_idx in self.abandoned_floors_idx:
+                rent = 0
+            total_rent += rent
+        return total_rent
 
     def update_contentment(self):
         rent = self.get_rent()
@@ -149,6 +169,15 @@ class Building:
     def get_contentment(self):
         return self.contentment
 
+    def clean(self):
+        return self.cleaner.clean()
+
+    def get_dirty_floors_idx(self):
+        return self.dirty_floors_idx
+
+    def get_cleaner(self):
+        return self.cleaner
+
     def update(self, clock):
         if self.abandon_timeout > 0:
             self.abandon_time += clock.get_time()
@@ -162,12 +191,18 @@ class Building:
                 self.comeback_time = 0
                 self.remove_abandoned_floor()
 
-    def make_abandoned_floor(self):
+        self.dirty_time += clock.get_time()
+        if self.dirty_time > self.dirty_timeout:
+            self.make_dirty_floor()
+            self.dirty_time = 0
 
+        self.cleaner.update(clock)
+
+    def make_abandoned_floor(self):
         candidate_floors = []
-        for floor in range(1, self.level):
-            if not floor in self.abandoned_floors_idx:
-                candidate_floors.append(floor)
+        for floor_idx in range(1, self.level):
+            if not floor_idx in self.abandoned_floors_idx:
+                candidate_floors.append(floor_idx)
 
         if len(candidate_floors) > 0:
             idx = random.choice(candidate_floors)
@@ -177,6 +212,22 @@ class Building:
     def remove_abandoned_floor(self):
         if len(self.abandoned_floors_idx) > 0:
             self.abandoned_floors_idx.pop()
+            self.remake_floors()
+
+    def make_dirty_floor(self):
+        candidate_floors = []
+        for floor_idx in range(1, self.level):
+            if not floor_idx in self.dirty_floors_idx:
+                candidate_floors.append(floor_idx)
+
+        if len(candidate_floors) > 0:
+            idx = random.choice(candidate_floors)
+            self.dirty_floors_idx.append(idx)
+            self.remake_floors()
+
+    def set_floor_clean(self, index):
+        if index in self.dirty_floors_idx:
+            self.dirty_floors_idx.remove(index)
             self.remake_floors()
 
     def remake_floors(self):

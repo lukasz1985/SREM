@@ -102,7 +102,6 @@ def display_startup_dropdown():
         tk.withdraw()
         tk.quit()
         game = Game(w, h)
-        game.startup()
         game.loop()
 
     ok_button = Button(tk, text="OK", command=start)

@@ -27,11 +27,13 @@ class View:
 
 
     def add_sprite(self, sprite):
-        self.sprites.append(sprite)
+        if not sprite in self.sprites:
+            self.sprites.append(sprite)
 
 
     def remove_sprite(self, sprite):
-        self.sprites.remove(sprite)
+        if sprite in self.sprites:
+            self.sprites.remove(sprite)
 
 
     def draw(self):

@@ -43,8 +43,9 @@ class TestHelipad(Test):
 
 
 if __name__ == "__main__":
+    # assets.images_dir = "pixel"
     #test = TestAbandonment()
-    test = TestHelipad()
-    # test = TestGame()
+    #test = TestHelipad()
+    test = TestGame()
     test.run()
 
