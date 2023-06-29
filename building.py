@@ -134,6 +134,9 @@ class Building:
             if floor_idx in self.abandoned_floors_idx:
                 rent = 0
             total_rent += rent
+        has_helipad = self.has_helipad()
+        if has_helipad:
+            total_rent += total_rent * 0.5
         return total_rent
 
     def update_contentment(self):
