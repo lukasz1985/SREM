@@ -1,3 +1,4 @@
+import constants
 import iso
 import assets
 from main import Game
@@ -17,8 +18,9 @@ class TestIso(Test):
 class TestGame(Test):
 
     def run(self):
+
         game = Game(600, 800)
-        game.player.funds = 1000
+        game.player.funds = 100000
         game.loop()
 
 
@@ -46,6 +48,8 @@ if __name__ == "__main__":
     # assets.images_dir = "pixel"
     #test = TestAbandonment()
     #test = TestHelipad()
+    # constants.Gameplay.MILLIS_PER_DAY = 20
+
     test = TestGame()
     test.run()
 

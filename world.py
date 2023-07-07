@@ -112,12 +112,12 @@ class World:
         self.paths.append(path)
 
     def update(self, clock):
-        if self.time > MILLIS_PER_DAY:
+        if self.time > Gameplay.MILLIS_PER_DAY:
             self.day += 1
             if self.day > 30:
                 self.month += 1
                 self.day = 1
-            self.time = self.time - MILLIS_PER_DAY
+            self.time = self.time - Gameplay.MILLIS_PER_DAY
             if self.day == 30:
                 player = self.main.player
                 self.on_day(self.month, self.day)

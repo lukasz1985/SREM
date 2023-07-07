@@ -41,10 +41,10 @@ class Building:
             self.view.remove_sprite(sprite)
 
     def can_upgrade(self):
-        return self.level < MAX_BUILDING_LEVEL
+        return self.level < Gameplay.MAX_BUILDING_LEVEL
 
     def upgrade(self):
-        if not self.level < MAX_BUILDING_LEVEL:
+        if not self.level < Gameplay.MAX_BUILDING_LEVEL:
             return False
         self.level += 1
         self.remove_from_view()
