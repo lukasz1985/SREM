@@ -1,6 +1,7 @@
 import pygame.font
 
 from cleaner import Cleaner, CleanerStateListener
+from graph import Graph
 from vectors import vec2
 import assets
 import gui
@@ -44,16 +45,25 @@ class Interface(CleanerStateListener):
         self.funds_gauge_controls = []
         self.create_funds_gauge()
 
+        self.graph_mode_indicator = None
+        self.graph_controls = []
+        self.create_graph_controls()
+        self.graph_button_controls = []
+        self.create_graph_button()
+        self.graph_visible = False
+        self.create_graph()
+
         self.create_status_bar()
 
     def display(self):
         self.display_upgrade_button()
         self.display_helipad_button()
         self.display_clean_button()
-        self.display_funds_gauge()
+        self.display_rent_slider()
         self.display_contentment_gauge()
         self.display_date_gauge()
-        self.display_rent_slider()
+        self.display_graph_button()
+        self.display_funds_gauge()
 
     def create_upgrade_button(self):
         thegui = self.main.gui
@@ -239,7 +249,7 @@ class Interface(CleanerStateListener):
         font = assets.load_font("Teko-Bold.ttf", 16)
         funds = player.get_funds()
         self.funds_gauge_txt = gui.Text("Funds: $" + str(funds), font, (255, 255, 255))
-        self.funds_gauge_txt.set_position(vec2(600 - 110, h - 22))
+        self.funds_gauge_txt.set_position(vec2(600 - 134, h - 22))
         self.funds_gauge_controls.append(self.funds_gauge_txt)
 
         funds_gauge_bg = gui.ImageWidget(assets.load_image("funds_gauge_bg.png"))
@@ -253,6 +263,102 @@ class Interface(CleanerStateListener):
     def create_status_bar(self):
         thegui = self.main.gui
         self.status_bar = StatusBar(thegui)
+
+    def create_graph_button(self):
+        # Create the funds gauge, that is in the lower right corner
+        thegui = self.main.gui
+        player = self.main.player
+
+        w, h = thegui.get_size()
+
+        self.graph_button = gui.Button(assets.load_image("graph.png"), self.toggle_graph)
+        self.graph_button.set_position(vec2(w - 30, h - 26))
+
+    def display_graph_button(self):
+        thegui = self.main.gui
+        thegui.add_widget(self.graph_button)
+
+    def create_graph(self):
+        self.graph = Graph(self.main.gui, self.main.player)
+
+    def display_graph(self):
+        self.graph.display()
+        thegui = self.main.gui
+        for control in self.graph_controls:
+            thegui.add_widget(control)
+
+    def hide_graph(self):
+        self.graph.hide()
+        thegui = self.main.gui
+        for control in self.graph_controls:
+            thegui.remove_widget(control)
+
+    def toggle_graph(self):
+        if not self.graph_visible:
+            self.display_graph()
+        else:
+            self.hide_graph()
+        self.graph_visible = not self.graph_visible
+
+    def create_graph_controls(self):
+        font = assets.load_font("Teko-Bold.ttf", 20)
+        thegui = self.main.gui
+        w, h = thegui.get_size()
+        x = 400
+        y = h - 270
+
+        funds_button = gui.Button(assets.load_image("graph_mode_funds.png"), self.set_graph_mode_funds)
+        funds_button.set_position(vec2(x, y))
+        funds_text = gui.Text("Funds", font, (0,0,0))
+        funds_text.set_position(vec2(x + 45, y + 4))
+        self.graph_controls.append(funds_text)
+        self.graph_controls.append(funds_button)
+
+        self.graph_mode_indicator = gui.Button(assets.load_image("graph_mode_indicator.png"))
+        self.graph_mode_indicator.set_position(vec2(x-34, y + 4))
+        self.graph_controls.append(self.graph_mode_indicator)
+
+        y += 30
+        income_button = gui.Button(assets.load_image("graph_mode_income.png"), self.set_graph_mode_income)
+        income_button.set_position(vec2(x, y))
+        income_text = gui.Text("Income", font, (0, 0, 0))
+        income_text.set_position(vec2(x + 39, y + 4))
+        self.graph_controls.append(income_text)
+        self.graph_controls.append(income_button)
+
+        y += 30
+        contentment_button = gui.Button(assets.load_image("graph_mode_contentment.png"), self.set_graph_mode_contentment)
+        contentment_button.set_position(vec2(x, y))
+        contentment_text = gui.Text("Contentment", font, (0, 0, 0))
+        contentment_text.set_position(vec2(x + 25, y + 4))
+        self.graph_controls.append(contentment_text)
+        self.graph_controls.append(contentment_button)
+
+
+
+    def set_graph_mode_funds(self):
+        self.graph.set_mode(Graph.FUNDS)
+        thegui = self.main.gui
+        w, h = thegui.get_size()
+        x = 400
+        y = h - 270
+        self.graph_mode_indicator.set_position(vec2(x - 34, y + 4))
+
+    def set_graph_mode_income(self):
+        self.graph.set_mode(Graph.INCOME)
+        thegui = self.main.gui
+        w, h = thegui.get_size()
+        x = 400
+        y = h - 240
+        self.graph_mode_indicator.set_position(vec2(x - 34, y + 4))
+
+    def set_graph_mode_contentment(self):
+        self.graph.set_mode(Graph.CONTENTMENT)
+        thegui = self.main.gui
+        w, h = thegui.get_size()
+        x = 400
+        y = h - 210
+        self.graph_mode_indicator.set_position(vec2(x - 34, y + 4))
 
     def upgrade(self):
         '''

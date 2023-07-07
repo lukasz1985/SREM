@@ -120,9 +120,8 @@ class World:
             self.time = self.time - MILLIS_PER_DAY
             if self.day == 30:
                 player = self.main.player
-                world = self
+                self.on_day(self.month, self.day)
                 player.on_day(self.month, self.day)
-                world.on_day(self.month, self.day)
 
         self.time += clock.get_time()
 

@@ -18,7 +18,7 @@ class TestGame(Test):
 
     def run(self):
         game = Game(600, 800)
-        game.player.funds = 100000
+        game.player.funds = 1000
         game.loop()
 
 
