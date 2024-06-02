@@ -1,4 +1,11 @@
 # SREM
+Consider donating to this project (and other too) if you feel satisfied with the content and/or value it brings to you.
+<center>
+
+[![](https://imgur.com/YJJXEjb.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=GTJXN6NPY6UQL&currency_code=PLN&source=url)
+
+</center>
+
 
 ## A minigame where player becomes a Single Real Estate Manager
 
@@ -9,9 +16,13 @@ additional money from the rents. Set the rents carefully to keep
 the inhabitants content, or else, if the get angry will start 
 devastating the building floors making them inhabitable. 
 
+<center>
+
 ![](https://i.imgur.com/7FM2n0Z.png)
 ![](https://i.imgur.com/0HFTZC3.png)
 ![](https://i.imgur.com/dztQPdd.png)
+
+</center>
 
 ## Running the game
 
